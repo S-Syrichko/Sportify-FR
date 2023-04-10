@@ -1,0 +1,13 @@
+@import "../../styles/utils/variables";
+.button {
+  width: 64px;
+  height: 64px;
+  border: 0;
+  border-radius: 6px;
+  background-color: $color-background-2;
+  color: $color-primary;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+}

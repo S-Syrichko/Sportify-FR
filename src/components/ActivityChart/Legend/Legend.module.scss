@@ -1,0 +1,30 @@
+@import "../../../styles/utils/variables";
+
+.root {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  margin-top: 25px;
+  h2 {
+    color: $color-secondary;
+    font-size: 15px;
+  }
+}
+.legend {
+  display: flex;
+  &Item {
+    margin-right: 35px;
+    display: flex;
+    align-items: center;
+  }
+  &Color {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  &Label {
+    color: $color-chart-tertiary;
+  }
+}
