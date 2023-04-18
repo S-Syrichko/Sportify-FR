@@ -3,9 +3,10 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 const mock = new AxiosMockAdapter(axios);
+const apiUrl = import.meta.env.VITE_API_URL;
 
-mock.onGet("/user/18").reply(200, {
-  data: {
+const userData = [
+  {
     id: 18,
     userInfos: {
       firstName: "Cecilia",
@@ -20,9 +21,36 @@ mock.onGet("/user/18").reply(200, {
       lipidCount: 120,
     },
   },
+  {
+    id: 12,
+    userInfos: {
+      firstName: "Karl",
+      lastName: "Dovineau",
+      age: 31,
+    },
+    todayScore: 0.12,
+    keyData: {
+      calorieCount: 1930,
+      proteinCount: 155,
+      carbohydrateCount: 290,
+      lipidCount: 50,
+    },
+  }
+];
+
+const pathRegex = new RegExp(`${apiUrl}/user\\/\\d+$`);
+
+mock.onGet(pathRegex).reply((config)=> {
+  const userId  = config.url?.split('/')[4];
+
+  const user = userData.find(u => u.id === parseInt(userId!));
+  if (user) {
+    return [200, { data: user }];
+  }  
+  return [404, {data: userId}];
 });
 
-mock.onGet("/user/18/activity").reply(200, {
+mock.onGet(`${apiUrl}/user/18/activity`).reply(200, {
   data: {
     userId: 18,
     sessions: [
@@ -65,7 +93,7 @@ mock.onGet("/user/18/activity").reply(200, {
   },
 });
 
-mock.onGet("/user/18/average-sessions").reply(200, {
+mock.onGet(`${apiUrl}/user/18/average-sessions`).reply(200, {
   data: {
     userId: 18,
     sessions: [

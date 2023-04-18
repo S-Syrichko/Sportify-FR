@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./Profile.module.scss";
 import { useParams } from "react-router-dom";
 import { fetchUser, User } from "../../api/apiService.js";
-import Activity from "../../components/ActivityChart/ActivityChart";
-import SessionsChart from "../../components/SessionsChart/SessionsChart";
+import Activity from "../../components/recharts/ActivityChart/ActivityChart";
+import SessionsChart from "../../components/recharts/SessionsChart/SessionsChart";
 
 interface ProfileState {
   user: User | undefined;

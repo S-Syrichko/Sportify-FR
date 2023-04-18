@@ -1,0 +1,16 @@
+@import '../../../styles/utils/variables';
+
+.sessions {
+    height: 260px;
+    width: 260px;
+    background-color: $color-primary;
+    border-radius: 5px;
+    overflow: hidden;
+    & .recharts-cartesian-axis-ticks{
+        transform: scale(0.3);
+    }
+}
+.xAxis{
+    color: $color-chart-tertiary;
+    padding: 0 10px;
+  }

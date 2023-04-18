@@ -1,5 +1,9 @@
+//apiService.ts
 //import axios from "axios";
 import axios from "./mocks/mockApi";
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 export interface User {
   data: {
@@ -10,6 +14,7 @@ export interface User {
       age: number;
     };
     score: number;
+    todayScore: number;
     keyData: {
       calorieCount: number;
       proteinCount: number;
@@ -25,12 +30,11 @@ export interface User {
  * @return {User}
  */
 export const fetchUser = async (userId: number) => {
-  const url = `/user/${userId}`;
+  const url = `${apiUrl}/user/${userId}`;
   try {
     const { data }: { data: User } = await axios.get(url);
     return data;
   } catch (err) {
-    console.error(err);
     throw err;
   }
 };
@@ -51,7 +55,7 @@ export interface UserActivity {
  * @returns {UserActivity}
  */
 export const fetchUserActivity = async (userId: number) => {
-  const url = `/user/${userId}/activity`;
+  const url = `${apiUrl}/user/${userId}/activity`;
   try {
     const { data }: { data: UserActivity } = await axios.get(url);
     return data;
@@ -77,7 +81,7 @@ export interface UserSessions {
  */
 
 export const fetchUserSessions = async (userId: number) => {
-  const url = `/user/${userId}/average-sessions`
+  const url = `${apiUrl}/user/${userId}/average-sessions`
   try {
     const { data }: { data: UserSessions } = await axios.get(url);
     return data;
