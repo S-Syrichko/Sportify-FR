@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchUser, User } from "../../api/apiService.js";
 import Activity from "../../components/recharts/ActivityChart/ActivityChart";
 import SessionsChart from "../../components/recharts/SessionsChart/SessionsChart";
+import PerformanceChart from "../../components/recharts/PerformanceChart/PerformanceChart";
 
 interface ProfileState {
   user: User | undefined;
@@ -36,8 +37,9 @@ const Profile = () => {
       {user && (
         <div>
           <Activity userId={userIdValue} />
-          <div>
+          <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap", width: "70%"}}>
             <SessionsChart userId={userIdValue} />
+            <PerformanceChart userId={userIdValue} />
           </div>
 
         </div>

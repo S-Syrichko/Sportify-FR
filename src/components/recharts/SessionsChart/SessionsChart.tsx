@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  XAxisProps,
 } from "recharts";
 import { fetchUserSessions, UserSessions } from "../../../api/apiService.js";
 import CustomLegend from "../custom/Legend/CustomLegend";
@@ -23,10 +24,29 @@ interface SessionProps {
   userId: number;
 }
 
+const xAxisProps: Partial<XAxisProps> = {
+  dataKey: "day",
+  scale: "point",
+  type: "category",
+  tickFormatter: (day) => moment(day, "E").format("dddd")[0].toUpperCase(),
+
+  style: {
+    transform: "scale(0.8)",
+    transformOrigin: "center bottom",
+  },
+  height: 20,
+  tick: { fill: "#FFFFFF", opacity: "0.5" },
+  textAnchor: "middle",
+  fontSize: 15,
+  tickMargin: 20,
+  axisLine: false,
+  tickLine: false,
+  interval: 0,
+};
+
 const SessionsChart = ({ userId }: SessionProps) => {
   const [state, setState] = useState<DataState>({ userSessions: undefined });
-  const [activeValue, setActiveValue] = useState<string |number| undefined>();
-
+  const [activeValue, setActiveValue] = useState<string | number | undefined>();
 
   useEffect(() => {
     if (userId) {
@@ -43,7 +63,7 @@ const SessionsChart = ({ userId }: SessionProps) => {
 
   return (
     <div className={styles.sessions}>
-      <ResponsiveContainer width="100%" height="100%" >
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart
           onMouseMove={(e) => setActiveValue(e.activeLabel ?? undefined)}
           width={260}
@@ -71,26 +91,7 @@ const SessionsChart = ({ userId }: SessionProps) => {
             activeDot={{ stroke: "#ffffff", strokeWidth: 8, r: 4 }}
             style={{ overflow: "visible" }}
           />
-          <XAxis
-            dataKey="day"
-            scale="point"
-            type="category"
-            tickFormatter={(day) =>
-              moment(day, "E").format("dddd")[0].toUpperCase()
-            }
-            style={{
-              transform: "scale(0.8)",
-              transformOrigin: "center bottom",
-            }}
-            height={20}
-            tick={{ fill: "#FFFFFF", opacity: "0.5" }}
-            textAnchor="middle"
-            fontSize={15}
-            tickMargin={20}
-            axisLine={false}
-            tickLine={false}
-            interval={0}
-          />
+          <XAxis {...xAxisProps} />
           <YAxis
             type="number"
             domain={["dataMin - 2", "dataMax + 2"]}
@@ -99,13 +100,6 @@ const SessionsChart = ({ userId }: SessionProps) => {
           <Legend
             content={<CustomLegend chartName="sessions" />}
             verticalAlign="top"
-          />
-          <Tooltip
-            wrapperStyle={{ outline: "none" }}
-            offset={0}
-            cursor={false}
-            separator={""}
-            content={<CustomTooltip chartName="sessions" />}
           />
           {activeValue && (
             <ReferenceArea
@@ -122,6 +116,13 @@ const SessionsChart = ({ userId }: SessionProps) => {
               ifOverflow="visible"
             />
           )}
+          <Tooltip
+            wrapperStyle={{ outline: "none" }}
+            offset={0}
+            cursor={false}
+            separator={""}
+            content={<CustomTooltip chartName="sessions" />}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

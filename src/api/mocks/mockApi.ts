@@ -5,8 +5,8 @@ import AxiosMockAdapter from "axios-mock-adapter";
 const mock = new AxiosMockAdapter(axios);
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const userData = [
-  {
+mock.onGet(`${apiUrl}/user/18`).reply(200, {
+  data: {
     id: 18,
     userInfos: {
       firstName: "Cecilia",
@@ -21,33 +21,6 @@ const userData = [
       lipidCount: 120,
     },
   },
-  {
-    id: 12,
-    userInfos: {
-      firstName: "Karl",
-      lastName: "Dovineau",
-      age: 31,
-    },
-    todayScore: 0.12,
-    keyData: {
-      calorieCount: 1930,
-      proteinCount: 155,
-      carbohydrateCount: 290,
-      lipidCount: 50,
-    },
-  }
-];
-
-const pathRegex = new RegExp(`${apiUrl}/user\\/\\d+$`);
-
-mock.onGet(pathRegex).reply((config)=> {
-  const userId  = config.url?.split('/')[4];
-
-  const user = userData.find(u => u.id === parseInt(userId!));
-  if (user) {
-    return [200, { data: user }];
-  }  
-  return [404, {data: userId}];
 });
 
 mock.onGet(`${apiUrl}/user/18/activity`).reply(200, {
@@ -124,6 +97,46 @@ mock.onGet(`${apiUrl}/user/18/average-sessions`).reply(200, {
       {
         day: 7,
         sessionLength: 50,
+      },
+    ],
+  },
+});
+
+mock.onGet(`${apiUrl}/user/18/performance`).reply(200, {
+  data: {
+    userId: 18,
+    kind: {
+      "1": "cardio",
+      "2": "energy",
+      "3": "endurance",
+      "4": "strength",
+      "5": "speed",
+      "6": "intensity",
+    },
+    data: [
+      {
+        value: 200,
+        kind: 1,
+      },
+      {
+        value: 240,
+        kind: 2,
+      },
+      {
+        value: 80,
+        kind: 3,
+      },
+      {
+        value: 80,
+        kind: 4,
+      },
+      {
+        value: 220,
+        kind: 5,
+      },
+      {
+        value: 110,
+        kind: 6,
       },
     ],
   },

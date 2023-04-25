@@ -4,6 +4,12 @@ import axios from "./mocks/mockApi";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
+export type KeyDataObject = {
+  calorieCount: number;
+  proteinCount: number;
+  carbohydrateCount: number;
+  lipidCount: number;
+};
 
 export interface User {
   data: {
@@ -15,12 +21,7 @@ export interface User {
     };
     score: number;
     todayScore: number;
-    keyData: {
-      calorieCount: number;
-      proteinCount: number;
-      carbohydrateCount: number;
-      lipidCount: number;
-    };
+    keyData: keyof KeyDataObject;
   };
 }
 
@@ -75,13 +76,13 @@ export interface UserSessions {
   };
 }
 /**
- * 
- * @param userId 
+ *
+ * @param userId
  * @returns {UserSessions}
  */
 
 export const fetchUserSessions = async (userId: number) => {
-  const url = `${apiUrl}/user/${userId}/average-sessions`
+  const url = `${apiUrl}/user/${userId}/average-sessions`;
   try {
     const { data }: { data: UserSessions } = await axios.get(url);
     return data;
@@ -89,4 +90,38 @@ export const fetchUserSessions = async (userId: number) => {
     console.error(err);
     throw err;
   }
+};
+export type KindObject = {
+  "1": string;
+  "2": string;
+  "3": string;
+  "4": string;
+  "5": string;
+  "6": string;
+};
+export interface UserPerformance {
+  data: {
+    userId: number;
+    kind: KindObject;
+    data: {
+      value: number;
+      kind: keyof KindObject;
+    }[];
+  };
 }
+/**
+ *
+ * @param userId
+ * @returns {UserPerformance}
+ */
+
+export const fetchUserPerformance = async (userId: number) => {
+  const url = `${apiUrl}/user/${userId}/performance`;
+  try {
+    const { data }: { data: UserPerformance } = await axios.get(url);
+    return data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
