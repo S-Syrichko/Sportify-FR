@@ -1,0 +1,17 @@
+//ScoreChart.module.scss
+@import "../../../styles/utils/variables";
+
+.score {
+  height: 260px;
+  width: 260px;
+  background-color: #fbfbfb;
+  border-radius: 5px;
+  tspan {
+    text-anchor: middle;
+  }
+}
+.scoreNum {
+  fill: $color-chart-primary;
+  font-weight: bold;
+  font-size: 26px;
+}

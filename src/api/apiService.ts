@@ -19,8 +19,8 @@ export interface User {
       lastName: string;
       age: number;
     };
-    score: number;
-    todayScore: number;
+    score: number | undefined;
+    todayScore?: number | undefined;
     keyData: keyof KeyDataObject;
   };
 }
@@ -34,6 +34,8 @@ export const fetchUser = async (userId: number) => {
   const url = `${apiUrl}/user/${userId}`;
   try {
     const { data }: { data: User } = await axios.get(url);
+    const finalScore = data.data.score !== undefined ? data.data.score : data.data.todayScore;
+    data.data.score = finalScore;
     return data;
   } catch (err) {
     throw err;

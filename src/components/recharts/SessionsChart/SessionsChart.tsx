@@ -66,6 +66,7 @@ const SessionsChart = ({ userId }: SessionProps) => {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           onMouseMove={(e) => setActiveValue(e.activeLabel ?? undefined)}
+          
           width={260}
           height={260}
           data={userSessions?.data.sessions}

@@ -42,6 +42,12 @@ const Legend = ({
             <h2>Durée moyenne des sessions</h2>
           </div>
         );
+      case "score":
+        return (
+          <div className={styles.score}>
+            <h2>Score</h2>
+          </div>
+        )
       default:
         return null;
         break;
