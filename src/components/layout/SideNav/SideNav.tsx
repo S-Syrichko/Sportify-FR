@@ -1,10 +1,10 @@
 import React from "react";
 import Button from "../../Button/Button";
 import { NavLink } from "react-router-dom";
-import Zen from "../../../assets/zen.svg";
-import Swim from "../../../assets/swim.svg";
-import Bike from "../../../assets/bike.svg";
-import Weight from "../../../assets/weight.svg";
+import Zen from "../../../assets/nav/zen.svg";
+import Swim from "../../../assets/nav/swim.svg";
+import Bike from "../../../assets/nav/bike.svg";
+import Weight from "../../../assets/nav/weight.svg";
 
 const SideNav = () => {
   const userId = 18;

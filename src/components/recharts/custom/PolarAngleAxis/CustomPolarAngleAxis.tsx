@@ -33,7 +33,7 @@ const CustomPolarAngleAxis = ({
 
   return (
     <g>
-      <text x={x + (x - cx) * 0.2} y={y + (y - cy) * 0.2} textAnchor={textAnchor} fill="#ffffff" fontSize={12}>
+      <text x={x + (x - cx) * 0.2} y={y + (y - cy) * 0.3} textAnchor={textAnchor} fill="#ffffff" fontSize={12}>
         <tspan>{formatKind(payload.value)}</tspan>
       </text>
     </g>

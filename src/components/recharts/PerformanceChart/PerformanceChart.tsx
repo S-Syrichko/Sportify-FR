@@ -49,7 +49,7 @@ const PerformanceChart = ({ userId }: SessionProps) => {
           <PolarGrid
             type="circle"
             radialLines={false}
-            polarRadius={[11.25, 22.5, 45, 67.5, 90]}
+            polarRadius={[0, 11.25, 22.5, 45, 67.5, 90]}
           />
           <PolarAngleAxis
             dataKey="kind"

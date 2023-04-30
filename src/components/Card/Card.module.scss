@@ -1,0 +1,30 @@
+.card {
+  height: 130px;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  &Vector {
+    margin-left: 30px;
+    height: 60px;
+    width: 60px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &Infos {
+    margin-left: 25px;
+
+    h2 {
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 24px;
+    }
+    span{
+        font-size: 14px;
+        color: #74798C;
+    }
+  }
+}

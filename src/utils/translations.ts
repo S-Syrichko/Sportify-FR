@@ -6,3 +6,12 @@ export const kindTranslations: { [key: string]: string } = {
     speed: "vitesse",
     intensity: "intensité",
   };
+
+export const unitPluralTranslations: { [key: string]: string } = {
+    calorie: "calories",
+    protein: "protéines",
+    carbohydrate: "glucides",
+    lipid: "lipides",
+
+  };
+
