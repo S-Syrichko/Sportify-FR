@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./PerformanceChart.module.scss";
+import PropTypes from "prop-types";
+import { fetchUserPerformance, UserPerformance } from "../../../api/apiService";
 import {
   Radar,
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
-  PolarRadiusAxis,
   ResponsiveContainer,
 } from "recharts";
-
-import { fetchUserPerformance, UserPerformance } from "../../../api/apiService";
 import CustomPolarAngleAxis from "../custom/PolarAngleAxis/CustomPolarAngleAxis";
 
 interface DataState {
@@ -19,6 +18,12 @@ interface SessionProps {
   userId: number;
 }
 
+/**
+ * User performance chart
+ * @description Displays a recharts RadarChart of user performance data.
+ * @prop {number} userId Database user id
+ * @returns User performance chart React Element.
+ */
 const PerformanceChart = ({ userId }: SessionProps) => {
   const [state, setState] = useState<DataState>({ userPerformance: undefined });
 
@@ -49,7 +54,7 @@ const PerformanceChart = ({ userId }: SessionProps) => {
           <PolarGrid
             type="circle"
             radialLines={false}
-            polarRadius={[0, 11.25, 22.5, 45, 67.5, 90]}
+            polarRadius={[11.25, 22.5, 45, 67.5, 90]}
           />
           <PolarAngleAxis
             dataKey="kind"
@@ -71,6 +76,10 @@ const PerformanceChart = ({ userId }: SessionProps) => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+PerformanceChart.propTypes = {
+  userId: PropTypes.number.isRequired,
 };
 
 export default PerformanceChart;

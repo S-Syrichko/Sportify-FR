@@ -3,9 +3,6 @@ import styles from "./ActivityChart.module.scss";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { fetchUserActivity, UserActivity } from "../../../api/apiService.js";
-import CustomLegend from "../custom/Legend/CustomLegend";
-import CustomTooltip from "../custom/Tooltip/CustomTooltip";
-
 import {
   BarChart,
   Bar,
@@ -16,6 +13,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import CustomLegend from "../custom/Legend/CustomLegend";
+import CustomTooltip from "../custom/Tooltip/CustomTooltip";
 
 interface DataState {
   userActivity: UserActivity | undefined;
@@ -23,10 +22,15 @@ interface DataState {
 
 interface ActivityProps {
   userId: number;
-  barColors: string[];
 }
-
-const ActivityChart = ({ userId, barColors }: ActivityProps) => {
+/**
+ * Activity chart
+ * @description Displays a recharts BarChart of user activity data.
+ * On hover, a tooltip appears.
+ * @prop {number} userId Database user id
+ * @returns Activity chart React Element.
+ */
+const ActivityChart = ({ userId }: ActivityProps) => {
   const [state, setState] = useState<DataState>({ userActivity: undefined });
   useEffect(() => {
     if (userId) {
@@ -105,7 +109,6 @@ const ActivityChart = ({ userId, barColors }: ActivityProps) => {
           <Tooltip
             content={<CustomTooltip chartName="activity" />}
             wrapperStyle={{ outline: "none" }}
-            allowEscapeViewBox={{ x: true, y: true }}
           />
           <Legend
             content={<CustomLegend chartName="activity" />}
@@ -114,14 +117,14 @@ const ActivityChart = ({ userId, barColors }: ActivityProps) => {
           <Bar
             yAxisId="kilogram"
             dataKey="kilogram"
-            fill={barColors[0]}
+            fill={"#282d30"}
             radius={[10, 10, 0, 0]}
             barSize={7}
           />
           <Bar
             yAxisId="calories"
             dataKey="calories"
-            fill={barColors[1]}
+            fill={"#e60000"}
             radius={[10, 10, 0, 0]}
             barSize={7}
           />
@@ -133,10 +136,6 @@ const ActivityChart = ({ userId, barColors }: ActivityProps) => {
 
 ActivityChart.propTypes = {
   userId: PropTypes.number.isRequired,
-  barColors: PropTypes.array,
-};
-ActivityChart.defaultProps = {
-  barColors: ["#282d30", "#e60000"],
 };
 
 export default ActivityChart;

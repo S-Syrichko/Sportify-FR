@@ -1,16 +1,15 @@
-@import '../../styles/utils/variables';
+@import "../../styles/utils/variables";
 
 .root {
-    margin-left: 225px;
-    h1{
-        margin-top: 70px;
-        margin-bottom: 40px;
-        color: $color-secondary;
-        span {
-            color: $color-primary;
-        }
+  margin-left: 5%;
+  padding-top: 90px;
+  padding-left: 115px;
+  h1 {
+    margin-top: 70px;
+    margin-bottom: 40px;
+    color: $color-secondary;
+    span {
+      color: $color-primary;
     }
-    p{
-      margin-bottom: 75px;
-    }
+  }
 }

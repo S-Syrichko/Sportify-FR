@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "./SessionsChart.module.scss";
+import PropTypes from "prop-types";
 import moment from "moment";
+import { fetchUserSessions, UserSessions } from "../../../api/apiService.js";
 import {
   ReferenceArea,
   LineChart,
@@ -12,7 +14,6 @@ import {
   ResponsiveContainer,
   XAxisProps,
 } from "recharts";
-import { fetchUserSessions, UserSessions } from "../../../api/apiService.js";
 import CustomLegend from "../custom/Legend/CustomLegend";
 import CustomTooltip from "../custom/Tooltip/CustomTooltip";
 
@@ -44,6 +45,14 @@ const xAxisProps: Partial<XAxisProps> = {
   interval: 0,
 };
 
+/**
+ * Average session duration chart
+ * @description Displays a recharts LineChart of the average session duration.
+ * The abscissa shows the average duration of sessions.
+ * On hover, a tooltip appears.
+ * @prop {number} userId Database user id
+ * @returns Average session duration chart React Element.
+ */
 const SessionsChart = ({ userId }: SessionProps) => {
   const [state, setState] = useState<DataState>({ userSessions: undefined });
   const [activeValue, setActiveValue] = useState<string | number | undefined>();
@@ -66,7 +75,9 @@ const SessionsChart = ({ userId }: SessionProps) => {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           onMouseMove={(e) => setActiveValue(e.activeLabel ?? undefined)}
-          
+          onMouseLeave={(e) => {
+            setActiveValue(undefined);
+          }}
           width={260}
           height={260}
           data={userSessions?.data.sessions}
@@ -83,6 +94,21 @@ const SessionsChart = ({ userId }: SessionProps) => {
               <stop offset="99%" stopColor="#FFFFFF" stopOpacity={1} />
             </linearGradient>
           </defs>
+          {activeValue && (
+            <ReferenceArea
+              x1={activeValue}
+              x2={
+                userSessions?.data.sessions[
+                  userSessions?.data.sessions.length - 1
+                ].day
+              }
+              y1={-400}
+              y2={400}
+              fill="#000000"
+              opacity={0.4}
+              ifOverflow="visible"
+            />
+          )}
           <Line
             type="natural"
             dataKey="sessionLength"
@@ -91,6 +117,7 @@ const SessionsChart = ({ userId }: SessionProps) => {
             dot={false}
             activeDot={{ stroke: "#ffffff", strokeWidth: 8, r: 4 }}
             style={{ overflow: "visible" }}
+            isAnimationActive={false}
           />
           <XAxis {...xAxisProps} />
           <YAxis
@@ -102,24 +129,9 @@ const SessionsChart = ({ userId }: SessionProps) => {
             content={<CustomLegend chartName="sessions" />}
             verticalAlign="top"
           />
-          {activeValue && (
-            <ReferenceArea
-              x1={activeValue}
-              x2={
-                userSessions?.data.sessions[
-                  userSessions?.data.sessions.length - 1
-                ].day
-              }
-              y1={0}
-              y2={260}
-              fill="#000000"
-              opacity={0.4}
-              ifOverflow="visible"
-            />
-          )}
+
           <Tooltip
             wrapperStyle={{ outline: "none" }}
-            offset={0}
             cursor={false}
             separator={""}
             content={<CustomTooltip chartName="sessions" />}
@@ -128,6 +140,10 @@ const SessionsChart = ({ userId }: SessionProps) => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+SessionsChart.propTypes = {
+  userId: PropTypes.number.isRequired,
 };
 
 export default SessionsChart;

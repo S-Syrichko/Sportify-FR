@@ -1,13 +1,13 @@
-//Card.tsx
 import React, { ReactComponentElement, useState } from "react";
 import styles from "./Card.module.scss";
+import PropTypes from "prop-types";
 import { capitalize, hexToRgb } from "../../utils/functions";
 import { unitPluralTranslations } from "../../utils/translations";
 
 interface CardProps {
   SvgIcon: any;
   color: string;
-  value: any;
+  value: number;
   type: string;
 }
 
@@ -29,11 +29,11 @@ const Card = (props: CardProps) => {
     }
   });
 
-  const valueFormatter =(value: number) => {
-   return new Intl.NumberFormat("en-IN", {
-        maximumSignificantDigits: 3,
-      }).format(value)
-  }
+  const valueFormatter = (value: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      maximumSignificantDigits: 3,
+    }).format(value);
+  };
 
   return (
     <div className={styles.card}>
@@ -41,7 +41,7 @@ const Card = (props: CardProps) => {
         className={styles.cardVector}
         style={{ background: `rgba(${hexToRgb(color)}, 0.1)` }}
       >
-        <SvgIcon {...props} fill={color} height={20} />
+        <SvgIcon fill={color} height={20} />
       </div>
       <div className={styles.cardInfos}>
         <h2>
@@ -52,6 +52,13 @@ const Card = (props: CardProps) => {
       </div>
     </div>
   );
+};
+
+Card.propTypes = {
+  SvgIcon: PropTypes.elementType.isRequired,
+  color: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  type: PropTypes.oneOf(["calorie", "protein", "carbohydrate", "lipid"]).isRequired,
 };
 
 export default Card;

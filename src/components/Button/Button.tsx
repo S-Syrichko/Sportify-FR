@@ -1,4 +1,4 @@
-import React, { ReactComponentElement } from "react";
+import React from "react";
 import styles from "./Button.module.scss";
 import PropTypes from "prop-types";
 

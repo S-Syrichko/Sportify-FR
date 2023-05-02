@@ -1,13 +1,20 @@
-//ScoreChart.tsx
 import React from "react";
 import styles from "./ScoreChart.module.scss";
-import CustomLegend from "../custom/Legend/CustomLegend";
+import PropTypes from "prop-types";
 import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+import CustomLegend from "../custom/Legend/CustomLegend";
 
 interface ScoreProps {
   scoreData: number | undefined;
 }
 
+
+/**
+ * Score chart
+ * @description Displays a recharts PieChart with user's score.
+ * @prop {number} scoreData User score value
+ * @returns Score chart React Element.
+ */
 const ScoreChart = ({ scoreData }: ScoreProps) => {
   const data = [
     { name: "Score", value: scoreData ? scoreData : 0 },
@@ -19,7 +26,7 @@ const ScoreChart = ({ scoreData }: ScoreProps) => {
     <div className={styles.score}>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart width={260} height={260}>
-        <Legend
+          <Legend
             content={<CustomLegend chartName="score" />}
             verticalAlign="top"
           />
@@ -68,6 +75,10 @@ const ScoreChart = ({ scoreData }: ScoreProps) => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+ScoreChart.propTypes = {
+  scoreData: PropTypes.number.isRequired,
 };
 
 export default ScoreChart;

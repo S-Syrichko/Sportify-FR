@@ -1,6 +1,5 @@
-//apiService.ts
-//import axios from "axios";
-import axios from "./mocks/mockApi";
+import axios from "axios";
+//import axios from "./mocks/mockApi";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { PolarAngleAxisProps } from "recharts";
 import { UserPerformance, KindObject } from "../../../../api/apiService";
 import { capitalize } from "../../../../utils/functions";
@@ -38,6 +39,25 @@ const CustomPolarAngleAxis = ({
       </text>
     </g>
   );
+};
+
+CustomPolarAngleAxis.propTypes = {
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  cx: PropTypes.number.isRequired,
+  cy: PropTypes.number.isRequired,
+  textAnchor: PropTypes.oneOf(["start", "middle", "end"]),
+  payload: PropTypes.shape({
+    coordinate: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+    index: PropTypes.number.isRequired,
+    offset: PropTypes.number.isRequired,
+  }).isRequired,
+  userPerformance: PropTypes.shape({
+    data: PropTypes.shape({
+      kind: PropTypes.objectOf(PropTypes.string),
+    }),
+  }).isRequired,
 };
 
 export default CustomPolarAngleAxis;

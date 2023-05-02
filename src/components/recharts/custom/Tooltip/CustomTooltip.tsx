@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./CustomTooltip.module.scss";
+import PropTypes from "prop-types";
 import { TooltipProps } from "recharts";
 import {
   ValueType,
@@ -35,6 +36,18 @@ const Tooltip = ({
   }
 
   return null;
+};
+
+Tooltip.propTypes = {
+  active: PropTypes.bool,
+  payload: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      unit: PropTypes.string,
+    })
+  ),
+  chartName: PropTypes.string.isRequired,
 };
 
 export default Tooltip;

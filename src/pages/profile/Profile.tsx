@@ -1,4 +1,3 @@
-//Profile.tsx
 import React, { useEffect, useState } from "react";
 import styles from "./Profile.module.scss";
 import { useParams } from "react-router-dom";
@@ -60,9 +59,9 @@ const Profile = () => {
       <h1>
         Bonjour <span>{user && user.data.userInfos.firstName}</span>
       </h1>
-      <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
+      <p>Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
       {user && (
-        <div style={{ display: "flex"}}>
+        <div style={{ display: "flex", marginTop: "75px"}}>
           <div className="chartsColumn" style={{display: "flex", flexDirection: "column", width: "70%"}}>
             <Activity userId={userIdValue} />
             <div className="chartsLine"
@@ -93,7 +92,7 @@ const Profile = () => {
                 key={index}
                 SvgIcon={cardList[index].svg}
                 color={cardList[index].color}
-                value={user.data.keyData[key as any]}
+                value={parseInt(user.data.keyData[key as any])}
                 type={key.split("Count")[0]}
               />
             ))}
