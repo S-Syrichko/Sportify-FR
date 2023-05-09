@@ -25,14 +25,14 @@ const SideNav = () => {
       </NavLink>
       <NavLink to={`/profile/${userId}`}>
         <Button
-          id={"zen"}
-          value={<img src={Bike} alt="Zen" />}
+          id={"bike"}
+          value={<img src={Bike} alt="Bike" />}
         />
       </NavLink>
       <NavLink to={`/profile/${userId}`}>
         <Button
-          id={"zen"}
-          value={<img src={Weight} alt="Zen" />}
+          id={"workout"}
+          value={<img src={Weight} alt="Workout"/>}
         />
       </NavLink>
     </nav>

@@ -1,18 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { PolarAngleAxisProps } from "recharts";
-import { UserPerformance, KindObject } from "../../../../api/apiService";
+import { KindObject } from "../../../../api/DataTypes";
+import { CustomAngleAxisProps } from "./CustomAngleAxisProps";
 import { capitalize } from "../../../../utils/functions";
 import { kindTranslations } from "../../../../utils/translations";
 
-export interface CustomAngleAxisProps extends PolarAngleAxisProps {
-  x: number;
-  y: number;
-  cx: number;
-  cy: number;
-  payload: { coordinate: number; value: number; index: number; offset: number };
-  userPerformance: UserPerformance;
-}
+/**
+ * Recharts custom polar angle axis component.
+ * @category Recharts components
+ * @property {CustomAngleAxisProps} props - Rechart PolarAngleAxis props
+ * @returns {JSX.Element} The custom recharts polar angle axis.
+ * @example
+ * // Example usage:
+ * import { PolarAngleAxis } from "recharts";
+ * <PolarAngleAxis
+            dataKey="kind"
+            range={[-150, 210]}
+            tick={(props) => (
+              <CustomPolarAngleAxis
+                {...props}
+                userPerformance={userPerformance}
+              />
+            )}
+          />
+ */
 const CustomPolarAngleAxis = ({
   payload,
   x,
@@ -34,7 +45,13 @@ const CustomPolarAngleAxis = ({
 
   return (
     <g>
-      <text x={x + (x - cx) * 0.2} y={y + (y - cy) * 0.3} textAnchor={textAnchor} fill="#ffffff" fontSize={12}>
+      <text
+        x={x + (x - cx) * 0.2}
+        y={y + (y - cy) * 0.3}
+        textAnchor={textAnchor}
+        fill="#ffffff"
+        fontSize={12}
+      >
         <tspan>{formatKind(payload.value)}</tspan>
       </text>
     </g>

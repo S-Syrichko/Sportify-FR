@@ -1,18 +1,18 @@
 import React from "react";
 import styles from "./Button.module.scss";
 import PropTypes from "prop-types";
+import { ButtonProps } from "./ButtonProps";
 
-interface ButtonProps {
-  id: string;
-  clickHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  type?: "button" | "submit" | "reset";
-  isDisabled?: boolean;
-  value: string | React.ReactNode;
-}
-
-const Button = (props: ButtonProps) => {
-  const btnEnableDisable = !props.isDisabled ? "btn-enable" : "btn-disabled";
-
+/**
+ * @category Components
+ * @description Button React component
+ * @param {ButtonProps} props ButtonProps interface
+ * @returns {JSX.Element} A button element
+ * @example
+ * // Example usage:
+ * <Button id="my-button" value="Click me" clickHandler={(event) => alert('Button clicked!')} />
+ */
+const Button = (props: ButtonProps): JSX.Element => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (props.clickHandler) {
       props.clickHandler(event);
@@ -33,16 +33,16 @@ const Button = (props: ButtonProps) => {
 };
 
 Button.propTypes = {
-    id: PropTypes.string.isRequired,
-    clickHandler: PropTypes.func,
-    type: PropTypes.oneOf(["button", "submit", "reset"]),
-    isDisabled: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  };
+  id: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func,
+  type: PropTypes.oneOf(["button", "submit", "reset"]),
+  isDisabled: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+};
 
 Button.defaultProps = {
   type: "button",
-  disabled: false,
+  isDisabled: false,
 };
 
 export default Button;

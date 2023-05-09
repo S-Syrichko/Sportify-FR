@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/recharts/ActivityChart/ActivityChart.tsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Sportify-FR documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Interfaces</h3><ul><li><a href="ButtonProps.html">ButtonProps</a></li><li><a href="CardProps.html">CardProps</a></li><li><a href="CustomAngleAxisProps.html">CustomAngleAxisProps</a></li><li><a href="User.html">User</a></li><li><a href="UserActivity.html">UserActivity</a></li><li><a href="UserPerformance.html">UserPerformance</a></li><li><a href="UserSessions.html">UserSessions</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#fetchUserActivity">fetchUserActivity</a></li><li><a href="global.html#fetchUserPerformance">fetchUserPerformance</a></li><li><a href="global.html#fetchUserSessions">fetchUserSessions</a></li></ul></div><div class="category"><h2>Components</h2><h3>Global</h3><ul><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li></ul></div><div class="category"><h2>Recharts</h2><h3>Global</h3><ul><li><a href="global.html#ActivityChart">ActivityChart</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#SessionsChart">SessionsChart</a></li></ul></div><div class="category"><h2>Recharts components</h2><h3>Global</h3><ul><li><a href="global.html#CustomLegend">CustomLegend</a></li><li><a href="global.html#CustomPolarAngleAxis">CustomPolarAngleAxis</a></li><li><a href="global.html#CustomTooltip">CustomTooltip</a></li></ul></div><div class="category"><h2>Utility</h2><h3>Global</h3><ul><li><a href="global.html#capitalize">capitalize</a></li><li><a href="global.html#hexToRgb">hexToRgb</a></li><li><a href="global.html#valueFormatter">valueFormatter</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/recharts/ActivityChart/ActivityChart.tsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import styles from "./ActivityChart.module.scss";
+import PropTypes from "prop-types";
+import moment from "moment";
+import { useUserActivity } from "./hooks/useUserActivity";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import CustomLegend from "../custom/Legend/CustomLegend";
+import CustomTooltip from "../custom/Tooltip/CustomTooltip";
+
+interface ActivityProps {
+  userId: number;
+}
+/**
+ * Displays a recharts BarChart of {@link UserActivity} sessions data.
+ *
+ * Tooltip appears on hover
+ * @category Recharts
+ * @prop {number} userId User id in database
+ * @returns {JSX.Element} User performance chart React Element.
+ * @example
+ * // Example usage:
+ * &lt;ActivityChart userId={18} />
+ */
+const ActivityChart = ({ userId }: ActivityProps): JSX.Element => {
+  const { data: userActivity, isLoading, isError } = useUserActivity(userId);
+
+  const yAxisDomain = (): [number, number] => {
+    const sessions = userActivity?.data.sessions;
+
+    const dataMin: number =
+      sessions?.reduce(
+        (min, session) => {
+          return session.kilogram &lt; min.kilogram ? session : min;
+        },
+        { kilogram: Infinity }
+      ).kilogram ?? 0;
+    const dataMax: number =
+      sessions?.reduce(
+        (max, session) => {
+          return session.kilogram > max.kilogram ? session : max;
+        },
+        { kilogram: -Infinity }
+      ).kilogram ?? 0;
+    const range: number = dataMax - dataMin;
+
+    return [dataMin - 1, dataMax + 3 - (range % 2)];
+  };
+
+  if (isLoading) return &lt;div className={styles.activity}>Loading...&lt;/div>;
+  if (isError)
+    return (
+      &lt;div className={styles.activity}>Error fetching user activity data&lt;/div>
+    );
+
+  return (
+    &lt;div className={styles.activity}>
+      &lt;ResponsiveContainer width="100%" height="100%">
+        &lt;BarChart
+          width={500}
+          height={300}
+          data={userActivity?.data.sessions}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+          barGap={8}
+        >
+          &lt;CartesianGrid strokeDasharray="3 3" vertical={false} />
+          &lt;XAxis
+            dataKey="day"
+            type="category"
+            tickFormatter={(day) => moment(day, "YYYY-MM-DD").format("D")}
+            axisLine={false}
+            tickLine={false}
+          />
+          &lt;YAxis
+            yAxisId="kilogram"
+            orientation="right"
+            domain={yAxisDomain}
+            dataKey="kilogram"
+            tickCount={3}
+            axisLine={false}
+            tickLine={false}
+          />
+          &lt;YAxis
+            yAxisId="calories"
+            domain={[0, "dataMax + 100"]}
+            dataKey="calories"
+            tickCount={3}
+            hide={true}
+          />
+          &lt;Tooltip
+            content={&lt;CustomTooltip chartName="activity" />}
+            wrapperStyle={{ outline: "none" }}
+          />
+          &lt;Legend
+            content={&lt;CustomLegend chartName="activity" />}
+            verticalAlign="top"
+          />
+          &lt;Bar
+            yAxisId="kilogram"
+            dataKey="kilogram"
+            fill={"#282d30"}
+            radius={[10, 10, 0, 0]}
+            barSize={7}
+          />
+          &lt;Bar
+            yAxisId="calories"
+            dataKey="calories"
+            fill={"#e60000"}
+            radius={[10, 10, 0, 0]}
+            barSize={7}
+          />
+        &lt;/BarChart>
+      &lt;/ResponsiveContainer>
+    &lt;/div>
+  );
+};
+
+ActivityChart.propTypes = {
+  /**
+   * userId is a number
+   */
+  userId: PropTypes.number.isRequired,
+};
+
+export default ActivityChart;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

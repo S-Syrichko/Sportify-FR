@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./PerformanceChart.module.scss";
 import PropTypes from "prop-types";
-import { fetchUserPerformance, UserPerformance } from "../../../api/apiService";
+import { useUserPerformance } from "./hooks/useUserPerformance";
 import {
   Radar,
   RadarChart,
@@ -11,34 +11,29 @@ import {
 } from "recharts";
 import CustomPolarAngleAxis from "../custom/PolarAngleAxis/CustomPolarAngleAxis";
 
-interface DataState {
-  userPerformance: UserPerformance | undefined;
-}
 interface SessionProps {
   userId: number;
 }
 
 /**
- * User performance chart
- * @description Displays a recharts RadarChart of user performance data.
- * @prop {number} userId Database user id
- * @returns User performance chart React Element.
+ * Displays a recharts RadarChart of {@link UserPerformance} data.
+ * 
+ * @category Recharts
+ * @prop {number} userId User id in database
+ * @returns {JSX.Element} User performance chart React Element.
+ * @example
+ * // Example usage:
+ * <PerformanceChart userId={18} />
  */
 const PerformanceChart = ({ userId }: SessionProps) => {
-  const [state, setState] = useState<DataState>({ userPerformance: undefined });
+  const {
+    data: userPerformance,
+    isLoading,
+    isError,
+  } = useUserPerformance(userId);
 
-  useEffect(() => {
-    if (userId) {
-      fetchUserPerformance(userId).then((data) => {
-        setState((prevState) => ({
-          ...prevState,
-          userPerformance: data,
-        }));
-      });
-    }
-  }, [userId]);
-
-  const { userPerformance } = state;
+  if (isLoading) return <div className={styles.performance}>Loading...</div>;
+  if (isError) return <div className={styles.performance}>Error fetching user performance data</div>;
 
   return (
     <div className={styles.performance}>

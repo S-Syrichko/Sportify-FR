@@ -8,14 +8,19 @@ interface CustomLegendProps extends LegendProps {
 }
 
 /**
- *Recharts custom legend component.
- *@property {import("recharts").LegendPayload[]} payload - The data used to render the legend.
- *@property {string} chartName - The name of the chart to determine which legend to display.
- *@param {CustomLegendProps} props - The props of the component.
- *@returns {JSX.Element | null} The custom recharts legend.
- *@typedef {object} CustomLegendProps - The props of the component.
+ * Recharts custom legend component.
+ * 
+ * Displays chart legend and/or chart title
+ * @category Recharts components
+ * @property {array} payload - The data used to render the legend.
+ * @property {"activity" |"sessions" |"score"} chartName - The name of the chart to determine which legend to display.
+ * @returns {JSX.Element | null} The custom recharts legend.
+ * @example
+ * // Example usage:
+ * import { Legend } from "recharts";
+ * <Legend content={<CustomLegend chartName="activity" />} />
  */
-const Legend = ({
+const CustomLegend = ({
   payload,
   chartName,
 }: CustomLegendProps): JSX.Element | null => {
@@ -65,9 +70,9 @@ const Legend = ({
   return null;
 };
 
-Legend.propTypes = {
+CustomLegend.propTypes = {
   payload: PropTypes.array,
-  chartName: PropTypes.string.isRequired,
+  chartName: PropTypes.oneOf(["activity", "sessions", "score"]).isRequired,
 };
 
-export default Legend;
+export default CustomLegend;

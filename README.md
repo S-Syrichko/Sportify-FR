@@ -13,7 +13,7 @@ Sportsee is an application for monitoring your physical activity with charts.
 ## Dependencies
 
 - [React](https://reactjs.org): v18.2.0
-- [React-router-dom]https://reactrouter.com/en/main): v6.10.0  
+- [React-router-dom](https://reactrouter.com/en/main): v6.10.0  
   `$ npm install react-router-dom`
 - [Recharts](https://recharts.org/en-US): v2.5.0
 - `$ npm install recharts`
@@ -52,8 +52,8 @@ Sportsee is an application for monitoring your physical activity with charts.
 
 . URL availables in this project:
  `http://localhost:5173`  
- `http://localhost:5173/user/12`  
- `http://localhost:5173/user/18`
+ `http://localhost:5173/profile/12`  
+ `http://localhost:5173/profile/18`
 
 Currently there are only users 12 and 18.
 

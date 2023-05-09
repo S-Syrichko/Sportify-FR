@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> pages/profile/Profile.tsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Sportify-FR documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Interfaces</h3><ul><li><a href="ButtonProps.html">ButtonProps</a></li><li><a href="User.html">User</a></li><li><a href="UserActivity.html">UserActivity</a></li><li><a href="UserPerformance.html">UserPerformance</a></li><li><a href="UserSessions.html">UserSessions</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Button">Button</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#SessionsChart">SessionsChart</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#fetchUserActivity">fetchUserActivity</a></li><li><a href="global.html#fetchUserPerformance">fetchUserPerformance</a></li><li><a href="global.html#fetchUserSessions">fetchUserSessions</a></li></ul></div><div class="category"><h2>Functions</h2><h3>Global</h3><ul><li><a href="global.html#capitalize">capitalize</a></li><li><a href="global.html#hexToRgb">hexToRgb</a></li><li><a href="global.html#valueFormatter">valueFormatter</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>pages/profile/Profile.tsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import styles from "./Profile.module.scss";
+import { useParams } from "react-router-dom";
+import { useFetchUser } from "./hooks/useFetchUser";
+import Activity from "../../components/recharts/ActivityChart/ActivityChart";
+import SessionsChart from "../../components/recharts/SessionsChart/SessionsChart";
+import PerformanceChart from "../../components/recharts/PerformanceChart/PerformanceChart";
+import ScoreChart from "../../components/recharts/ScoreChart/ScoreChart";
+import { ReactComponent as Fire } from "../../assets/cards/energy.svg";
+import { ReactComponent as Chicken } from "../../assets/cards/chicken.svg";
+import { ReactComponent as Apple } from "../../assets/cards/apple.svg";
+import { ReactComponent as Burger } from "../../assets/cards/cheeseburger.svg";
+import Card from "../../components/Card/Card";
+
+const cardList = [
+  {
+    svg: Fire,
+    color: "#ff0000",
+  },
+  {
+    svg: Chicken,
+    color: "#4ab8ff",
+  },
+  {
+    svg: Apple,
+    color: "#fdcc0c",
+  },
+  {
+    svg: Burger,
+    color: "#fd5181",
+  },
+];
+
+/**
+ * Profile
+ * @description Profile page React component
+ * @returns {JSX.Element} The profile page
+ * @example
+ * // Example usage:
+ * &lt;Profile />
+ */
+const Profile = () => {
+  const { userId } = useParams&lt;{ userId: string }>();
+  const userIdValue = parseInt(userId!);
+
+  const { data: user, isLoading, isError } = useFetchUser(userIdValue);
+
+  if (isLoading) return &lt;>Loading...&lt;/>;
+  if (isError) return &lt;>Error fetching user performance data&lt;/>;
+
+  return (
+    &lt;div className={styles.root}>
+      &lt;h1>
+        Bonjour &lt;span>{user &amp;&amp; user.data.userInfos.firstName}&lt;/span>
+      &lt;/h1>
+      &lt;p>Félicitations ! Vous avez explosé vos objectifs hier 👏&lt;/p>
+      {user &amp;&amp; (
+        &lt;div style={{ display: "flex", marginTop: "75px" }}>
+          &lt;div
+            className="chartsColumn"
+            style={{ display: "flex", flexDirection: "column", width: "70%" }}
+          >
+            &lt;Activity userId={userIdValue} />
+            &lt;div
+              className="chartsLine"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                width: "100%",
+              }}
+            >
+              &lt;SessionsChart userId={userIdValue} />
+              &lt;PerformanceChart userId={userIdValue} />
+              &lt;ScoreChart scoreData={user.data.score} />
+            &lt;/div>
+          &lt;/div>
+          &lt;div
+            className="cards"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              width: "20%",
+              marginLeft: "30px",
+            }}
+          >
+            {Object.keys(user.data.keyData).map((key, index) => (
+              &lt;Card
+                key={index}
+                SvgIcon={cardList[index].svg}
+                color={cardList[index].color}
+                value={parseInt(user.data.keyData[key as any])}
+                type={key.split("Count")[0]}
+              />
+            ))}
+          &lt;/div>
+        &lt;/div>
+      )}
+    &lt;/div>
+  );
+};
+
+export default Profile;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
 import styles from "./SessionsChart.module.scss";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { fetchUserSessions, UserSessions } from "../../../api/apiService.js";
+import { useUserSessions } from "./hooks/useUserSessions";
 import {
   ReferenceArea,
   LineChart,
@@ -16,10 +16,6 @@ import {
 } from "recharts";
 import CustomLegend from "../custom/Legend/CustomLegend";
 import CustomTooltip from "../custom/Tooltip/CustomTooltip";
-
-interface DataState {
-  userSessions: UserSessions | undefined;
-}
 
 interface SessionProps {
   userId: number;
@@ -46,29 +42,24 @@ const xAxisProps: Partial<XAxisProps> = {
 };
 
 /**
- * Average session duration chart
- * @description Displays a recharts LineChart of the average session duration.
- * The abscissa shows the average duration of sessions.
- * On hover, a tooltip appears.
- * @prop {number} userId Database user id
- * @returns Average session duration chart React Element.
+ * Displays a recharts LineChart of {@link UserSessions} sessions data.
+ * 
+ * Tooltip appears on Line hover
+ * 
+ * ReferenceArea follows the active dot and darkens chart background to the right when hover is active
+ * @category Recharts
+ * @prop {number} userId User id in database
+ * @returns {JSX.Element} User sessions chart React Element.
+ * @example
+ * // Example usage:
+ * <SessionsChart userId={18} />
  */
-const SessionsChart = ({ userId }: SessionProps) => {
-  const [state, setState] = useState<DataState>({ userSessions: undefined });
+const SessionsChart = ({ userId }: SessionProps): JSX.Element => {
+  const { data: userSessions, isLoading, isError } = useUserSessions(userId);
   const [activeValue, setActiveValue] = useState<string | number | undefined>();
 
-  useEffect(() => {
-    if (userId) {
-      fetchUserSessions(userId).then((data) => {
-        setState((prevState) => ({
-          ...prevState,
-          userSessions: data,
-        }));
-      });
-    }
-  }, [userId]);
-
-  const { userSessions } = state;
+  if (isLoading) return <div className={styles.sessions}>Loading...</div>;
+  if (isError) return <div className={styles.sessions}>Error fetching user sessions data</div>;
 
   return (
     <div className={styles.sessions}>

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./ActivityChart.module.scss";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { fetchUserActivity, UserActivity } from "../../../api/apiService.js";
+import { useUserActivity } from "./hooks/useUserActivity";
 import {
   BarChart,
   Bar,
@@ -16,34 +16,22 @@ import {
 import CustomLegend from "../custom/Legend/CustomLegend";
 import CustomTooltip from "../custom/Tooltip/CustomTooltip";
 
-interface DataState {
-  userActivity: UserActivity | undefined;
-}
-
 interface ActivityProps {
   userId: number;
 }
 /**
- * Activity chart
- * @description Displays a recharts BarChart of user activity data.
- * On hover, a tooltip appears.
- * @prop {number} userId Database user id
- * @returns Activity chart React Element.
+ * Displays a recharts BarChart of {@link UserActivity} sessions data.
+ *
+ * Tooltip appears on hover
+ * @category Recharts
+ * @prop {number} userId User id in database
+ * @returns {JSX.Element} User performance chart React Element.
+ * @example
+ * // Example usage:
+ * <ActivityChart userId={18} />
  */
-const ActivityChart = ({ userId }: ActivityProps) => {
-  const [state, setState] = useState<DataState>({ userActivity: undefined });
-  useEffect(() => {
-    if (userId) {
-      fetchUserActivity(userId).then((data) => {
-        setState((prevState) => ({
-          ...prevState,
-          userActivity: data,
-        }));
-      });
-    }
-  }, [userId]);
-
-  const { userActivity } = state;
+const ActivityChart = ({ userId }: ActivityProps): JSX.Element => {
+  const { data: userActivity, isLoading, isError } = useUserActivity(userId);
 
   const yAxisDomain = (): [number, number] => {
     const sessions = userActivity?.data.sessions;
@@ -66,6 +54,12 @@ const ActivityChart = ({ userId }: ActivityProps) => {
 
     return [dataMin - 1, dataMax + 3 - (range % 2)];
   };
+
+  if (isLoading) return <div className={styles.activity}>Loading...</div>;
+  if (isError)
+    return (
+      <div className={styles.activity}>Error fetching user activity data</div>
+    );
 
   return (
     <div className={styles.activity}>
@@ -135,6 +129,9 @@ const ActivityChart = ({ userId }: ActivityProps) => {
 };
 
 ActivityChart.propTypes = {
+  /**
+   * userId is a number
+   */
   userId: PropTypes.number.isRequired,
 };
 

@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> api/DataTypes.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Sportify-FR documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Interfaces</h3><ul><li><a href="ButtonProps.html">ButtonProps</a></li><li><a href="CardProps.html">CardProps</a></li><li><a href="CustomAngleAxisProps.html">CustomAngleAxisProps</a></li><li><a href="User.html">User</a></li><li><a href="UserActivity.html">UserActivity</a></li><li><a href="UserPerformance.html">UserPerformance</a></li><li><a href="UserSessions.html">UserSessions</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#fetchUserActivity">fetchUserActivity</a></li><li><a href="global.html#fetchUserPerformance">fetchUserPerformance</a></li><li><a href="global.html#fetchUserSessions">fetchUserSessions</a></li></ul></div><div class="category"><h2>Components</h2><h3>Global</h3><ul><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li></ul></div><div class="category"><h2>Recharts</h2><h3>Global</h3><ul><li><a href="global.html#ActivityChart">ActivityChart</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#SessionsChart">SessionsChart</a></li></ul></div><div class="category"><h2>Recharts components</h2><h3>Global</h3><ul><li><a href="global.html#CustomLegend">CustomLegend</a></li><li><a href="global.html#CustomPolarAngleAxis">CustomPolarAngleAxis</a></li><li><a href="global.html#CustomTooltip">CustomTooltip</a></li></ul></div><div class="category"><h2>Utility</h2><h3>Global</h3><ul><li><a href="global.html#capitalize">capitalize</a></li><li><a href="global.html#hexToRgb">hexToRgb</a></li><li><a href="global.html#valueFormatter">valueFormatter</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>api/DataTypes.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Object containing user's nutritional values.
+ *@memberof User
+ *@alias KeyDataObject
+ */
+export type KeyDataObject = {
+  /**
+   * User's calorie count
+   */
+  calorieCount: number;
+  /**
+   * User's protein count
+   */
+  proteinCount: number;
+  /**
+   * User's carbohydrate count
+   */
+  carbohydrateCount: number;
+  /**
+   * User's lipid count
+   */
+  lipidCount: number;
+};
+
+/**
+ * TypeScript interface for {@link fetchUser} data structure
+ * @see fetchUser
+ */
+export interface User {
+  /**
+   * Object containing the user data.
+   */
+  data: {
+    /**
+     * User's id
+     */
+    id: number;
+    /**
+     * Object containing the user's personal information
+     */
+    userInfos: {
+      /**
+       * User's first name
+       */
+      firstName: string;
+      /**
+       * User's last name
+       */
+      lastName: string;
+      /**
+       * User's age
+       */
+      age: number;
+    };
+    /**
+     * User's score
+     */
+    score: number | undefined;
+    /**
+     * Alternative data name for user score API side. Value will be stored in score if exists.
+     */
+    todayScore?: number | undefined;
+    /**
+     * The key data used to access {KeyDataObject}. Not generated in doc
+     */
+    keyData: keyof KeyDataObject;
+  };
+}
+
+/**
+ * TypeScript interface for {@link fetchUserActivity} data structure
+ * @see fetchUserActivity
+ */
+export interface UserActivity {
+  /**
+   * Object containing the user's activity data.
+   */
+  data: {
+    /**
+     * User's id
+     */
+    userId: number;
+    /**
+     * Array of sessions, where each session contains data for a specific day.
+     */
+    sessions: {
+      /**
+       * Date of the session in the format "YYYY-MM-DD".
+       */
+      day: string;
+      /**
+       * Weight in kilograms during the session.
+       */
+      kilogram: number;
+      /**
+       * Calories burned during the session.
+       */
+      calories: number;
+    }[];
+  };
+}
+
+/**
+ * TypeScript interface for {@link fetchUserSessions} data structure
+ * @see fetchUserSessions
+ */
+export interface UserSessions {
+  /**
+   * Object containing the user's sessions data.
+   */
+  data: {
+    /**
+     * User's id
+     */
+    userId: number;
+    /**
+     * Array of sessions, where each session contains data for a specific day.
+     */
+    sessions: {
+      /**
+       * Months day of the session in the format "D" or "DD".
+       */
+      day: number;
+      /**
+       * Session length in minutes.
+       */
+      sessionLength: number;
+    }[];
+  };
+}
+
+/**
+ * Object containing the kind values mapped to string values.
+ *@memberof UserPerformance
+ *@alias KindObject
+ */
+export type KindObject = {
+  "1": string;
+  "2": string;
+  "3": string;
+  "4": string;
+  "5": string;
+  "6": string;
+};
+
+/**
+ * TypeScript interface for {@link fetchUserPerformance} data structure
+ * @see fetchUserPerformance
+ */
+export interface UserPerformance {
+  /**
+   * Object containing the user data.
+   */
+  data: {
+    /**
+     * User's id
+     */
+    userId: number;
+    /**
+     * Object mapping kind values to string values.
+     */
+    kind: KindObject;
+    /**
+     * An array of performance data points, where each point contains a value and its associated kind.
+     */
+    data: {
+      /**
+       * The value of the performance data point.
+       */
+      value: number;
+      /**
+       * The kind of the performance data point, expressed as a key of the `kind` object. Not generated in doc
+       */
+      kind: keyof KindObject;
+    }[];
+  };
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

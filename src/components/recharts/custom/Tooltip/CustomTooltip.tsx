@@ -10,8 +10,19 @@ import {
 interface CustomTooltipProps extends TooltipProps<ValueType, NameType> {
   chartName: string;
 }
-
-const Tooltip = ({
+/**
+ * Recharts custom tooltip component.
+ * @category Recharts components
+ * @property {bool} active - Is tooltip active
+ * @property {array} payload - The data used to render the tooltip.
+ * @property {"activity" |"sessions"} chartName - The name of the chart to determine which tooltip to display.
+ * @returns {JSX.Element | null} The custom recharts legend.
+ * @example
+ * // Example usage:
+ * import { Tooltip } from "recharts";
+ * <Tooltip content={<CustomTooltip chartName="activity" />} />
+ */
+const CustomTooltip = ({
   active,
   payload,
   chartName,
@@ -38,7 +49,7 @@ const Tooltip = ({
   return null;
 };
 
-Tooltip.propTypes = {
+CustomTooltip.propTypes = {
   active: PropTypes.bool,
   payload: PropTypes.arrayOf(
     PropTypes.shape({
@@ -47,7 +58,7 @@ Tooltip.propTypes = {
       unit: PropTypes.string,
     })
   ),
-  chartName: PropTypes.string.isRequired,
+  chartName: PropTypes.oneOf(["activity", "sessions"]).isRequired,
 };
 
-export default Tooltip;
+export default CustomTooltip;

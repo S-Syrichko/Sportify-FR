@@ -10,17 +10,24 @@ interface ScoreProps {
 
 
 /**
- * Score chart
- * @description Displays a recharts PieChart with user's score.
- * @prop {number} scoreData User score value
- * @returns Score chart React Element.
+ * Displays a recharts PieChart of {@link UserScore} data.
+ * 
+ * Chart's center is filled by a white Pie.
+ * 
+ * Also displays scoreData as percentage in center of chart.
+ * @category Recharts
+ * @prop {number} scoreData User score data as percentage in décimal notation
+ * @returns {JSX.Element} User score chart React Element.
+ * @example
+ * // Example usage:
+ * <ScoreChart scoreData={0.4} />
  */
-const ScoreChart = ({ scoreData }: ScoreProps) => {
+const ScoreChart = ({ scoreData }: ScoreProps): JSX.Element => {
   const data = [
     { name: "Score", value: scoreData ? scoreData : 0 },
     { name: "Remaining", value: 1 - (scoreData ? scoreData : 0) },
   ];
-  const filler = [{ name: "Background", value: 1 }];
+  const centerFiller = [{ name: "Background", value: 1 }];
 
   return (
     <div className={styles.score}>
@@ -31,7 +38,7 @@ const ScoreChart = ({ scoreData }: ScoreProps) => {
             verticalAlign="top"
           />
           <Pie
-            data={filler}
+            data={centerFiller}
             cx={125}
             cy={90}
             innerRadius={0}

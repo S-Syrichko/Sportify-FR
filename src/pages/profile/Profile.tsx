@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Profile.module.scss";
 import { useParams } from "react-router-dom";
-import { fetchUser, User, KeyDataObject } from "../../api/apiService.js";
-import Activity from "../../components/recharts/ActivityChart/ActivityChart";
+import { useFetchUser } from "./hooks/useFetchUser";
+import ActivityChart from "../../components/recharts/ActivityChart/ActivityChart";
 import SessionsChart from "../../components/recharts/SessionsChart/SessionsChart";
 import PerformanceChart from "../../components/recharts/PerformanceChart/PerformanceChart";
 import ScoreChart from "../../components/recharts/ScoreChart/ScoreChart";
@@ -11,10 +11,6 @@ import { ReactComponent as Chicken } from "../../assets/cards/chicken.svg";
 import { ReactComponent as Apple } from "../../assets/cards/apple.svg";
 import { ReactComponent as Burger } from "../../assets/cards/cheeseburger.svg";
 import Card from "../../components/Card/Card";
-
-interface ProfileState {
-  user: User | undefined;
-}
 
 const cardList = [
   {
@@ -35,24 +31,15 @@ const cardList = [
   },
 ];
 
+
 const Profile = () => {
   const { userId } = useParams<{ userId: string }>();
   const userIdValue = parseInt(userId!);
 
-  const [state, setState] = useState<ProfileState>({ user: undefined });
+  const { data: user, isLoading, isError } = useFetchUser(userIdValue);
 
-  useEffect(() => {
-    if (userId) {
-      fetchUser(userIdValue).then((data) => {
-        setState((prevState) => ({
-          ...prevState,
-          user: data,
-        }));
-      });
-    }
-  }, [userId]);
-
-  const { user } = state;
+  if (isLoading) return <>Loading...</>;
+  if (isError) return <>Error fetching user performance data</>;
 
   return (
     <div className={styles.root}>
@@ -61,10 +48,14 @@ const Profile = () => {
       </h1>
       <p>Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
       {user && (
-        <div style={{ display: "flex", marginTop: "75px"}}>
-          <div className="chartsColumn" style={{display: "flex", flexDirection: "column", width: "70%"}}>
-            <Activity userId={userIdValue} />
-            <div className="chartsLine"
+        <div style={{ display: "flex", marginTop: "75px" }}>
+          <div
+            className="chartsColumn"
+            style={{ display: "flex", flexDirection: "column", width: "70%" }}
+          >
+            <ActivityChart userId={userIdValue} />
+            <div
+              className="chartsLine"
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -77,7 +68,8 @@ const Profile = () => {
               <ScoreChart scoreData={user.data.score} />
             </div>
           </div>
-          <div className="cards"
+          <div
+            className="cards"
             style={{
               display: "flex",
               flexDirection: "column",
