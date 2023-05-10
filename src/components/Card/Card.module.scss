@@ -1,10 +1,11 @@
+@import "../../styles/utils/variables";
 .card {
   height: 130px;
-  width: 250px;
+  max-width: 250px;
   display: flex;
   align-items: center;
   border-radius: 5px;
-  background-color: #fbfbfb;
+  background-color: $color-background-1;
   &Vector {
     margin-left: 30px;
     height: 60px;
@@ -24,7 +25,7 @@
     }
     span{
         font-size: 14px;
-        color: #74798C;
+        color: $color-chart-tertiary;
     }
   }
 }

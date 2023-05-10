@@ -55,6 +55,9 @@ Sportsee is an application for monitoring your physical activity with charts.
  `http://localhost:5173/profile/12`  
  `http://localhost:5173/profile/18`
 
+. Documentation is available at :
+ `http://localhost:5173/docs/`
+
 Currently there are only users 12 and 18.
 
 ## Autor
