@@ -31,15 +31,19 @@ const cardList = [
   },
 ];
 
-
 const Profile = () => {
   const { userId } = useParams<{ userId: string }>();
   const userIdValue = parseInt(userId!);
 
   const { data: user, isLoading, isError } = useFetchUser(userIdValue);
 
-  if (isLoading) return <>Loading...</>;
-  if (isError) return <>Error fetching user performance data</>;
+  if (isLoading) return <div className={styles.root}><h1>Chargement...</h1></div>;
+  if (isError)
+    return (
+      <div className={styles.error}>
+        <h1>Le serveur distant à retourné une erreur</h1>
+      </div>
+    );
 
   return (
     <div className={styles.root}>

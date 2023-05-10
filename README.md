@@ -39,13 +39,13 @@ Sportsee is an application for monitoring your physical activity with charts.
 ## Installing and launching Front-End
 
 1. Clone the repository of SportSee front-end:  
-   `git clone https://github.com/Future64/MaximDassonneville_12_01022022`
+   `git clone https://github.com/S-Syrichko/Sportify-FR`
 
 2. Install all dependencies for Front-End:  
    `npm install`
 
 3. Launch front-end:  
-   `npm start`
+   `npm run dev`
 
 . Front-end will launch at URL:
 `http://localhost:5173`.
