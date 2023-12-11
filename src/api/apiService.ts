@@ -1,5 +1,5 @@
-import axios from "axios";
-//import axios from "./mocks/mockApi";
+//import axios from "axios";
+import axios from "./mocks/mockApi";
 
 import { User, UserActivity, UserSessions, UserPerformance } from "./DataTypes";
 
