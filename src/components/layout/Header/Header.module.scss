@@ -1,4 +1,6 @@
 @import "../../../styles/utils/variables";
+@import "../../../styles/utils/mixins";
+
 .header {
   position: fixed;
   width: 100%;
@@ -19,6 +21,18 @@
     a {
       color: $color-background-2;
       font-size: 24px;
+    }
+  }
+  @include display-mobile {
+    height: 60px;
+    img {
+      width: 80px;
+      margin-left: 10px;
+    }
+    nav {
+      a {
+        font-size: 12px;
+      }
     }
   }
 }

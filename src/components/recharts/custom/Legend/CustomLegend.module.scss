@@ -1,4 +1,5 @@
 @import "../../../../styles/utils/variables";
+@import "../../../../styles/utils/mixins";
 
 .legend {
   display: flex;
@@ -25,9 +26,27 @@
     width: 8px;
     border-radius: 50%;
     margin-right: 10px;
+    aspect-ratio: 1/1;
   }
   &Label {
     color: $color-chart-tertiary;
+  }
+  @include display-mobile {
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-top: 15px;
+    h2{
+      margin-bottom: 10px;
+    }
+    &Item {
+      margin-right: 10px;
+    }
+    &Color {
+      margin-right: 5px;
+    }
+    &Label {
+      font-size: 12px;
+    }
   }
 }
 .sessions {

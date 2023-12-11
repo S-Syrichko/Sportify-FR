@@ -10,6 +10,11 @@ export default defineConfig({
       // svgr options
     },
   }),],
+  server: {
+    watch: {
+      usePolling: true,
+    },
+  },
   css: {
     preprocessorOptions: {
       sass: {

@@ -37,7 +37,12 @@ const Profile = () => {
 
   const { data: user, isLoading, isError } = useFetchUser(userIdValue);
 
-  if (isLoading) return <div className={styles.root}><h1>Chargement...</h1></div>;
+  if (isLoading)
+    return (
+      <div className={styles.root}>
+        <h1>Chargement...</h1>
+      </div>
+    );
   if (isError)
     return (
       <div className={styles.error}>
@@ -52,37 +57,16 @@ const Profile = () => {
       </h1>
       <p>Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
       {user && (
-        <div style={{ display: "flex", marginTop: "75px" }}>
-          <div
-            className="chartsColumn"
-            style={{ display: "flex", flexDirection: "column", width: "70%" }}
-          >
+        <div className={styles.userData}>
+          <div className={styles.charts}>
             <ActivityChart userId={userIdValue} />
-            <div
-              className="chartsLine"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                width: "100%",
-              }}
-            >
+            <div className={styles.chartsLine}>
               <SessionsChart userId={userIdValue} />
               <PerformanceChart userId={userIdValue} />
               <ScoreChart scoreData={user.data.score} />
             </div>
           </div>
-          <div
-            className="cards"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              width: "20%",
-              marginLeft: "30px",
-            }}
-          >
+          <div className={styles.cardsWrapper}>
             {Object.keys(user.data.keyData).map((key, index) => (
               <Card
                 key={index}
