@@ -10,6 +10,7 @@ export default defineConfig({
       // svgr options
     },
   }),],
+  base: '/Sportify-FR/',
   server: {
     watch: {
       usePolling: true,
