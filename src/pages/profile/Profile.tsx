@@ -69,7 +69,7 @@ const Profile = () => {
           <div className={styles.cardsWrapper}>
             {Object.keys(user.data.keyData).map((key, index) => (
               <Card
-                key={index}
+                key={`${userIdValue}-${key}`}
                 SvgIcon={cardList[index].svg}
                 color={cardList[index].color}
                 value={parseInt(user.data.keyData[key as any])}
